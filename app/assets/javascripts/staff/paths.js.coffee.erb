@@ -1,0 +1,11 @@
+window.named_paths = []
+<% %w(count_staff_messages tag_staff_message).each do |name| %>
+<% route = Rails.application.routes.named_routes[name] %>
+<%= "window.named_paths['#{name}'] = '#{route.path.spec.left.to_s}'\n" %>
+<% end %>
+
+window.path_for = (name, ids = {}) ->
+  path = window.named_paths[name]
+  for key, id of ids
+    path = path.replace(new RegExp(":#{key}\\b"), id)
+  path
