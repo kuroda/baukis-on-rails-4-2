@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+development:
+  <<: *default
+  database: baukis_development
+test:
+  <<: *default
+  database: baukis_test
+production:
+  <<: *default
+  database: baukis_production
+  username: baukis
+  password: baukis
