@@ -44,11 +44,20 @@ describe Staff::TopController, 'ログイン後' do
     end
 
     example 'セッションタイムアウト' do
+      setting = ApplicationSetting.first
       session[:last_access_time] =
-        Staff::Base::TIMEOUT.ago.advance(seconds: -1)
+        setting.session_timeout.minutes.ago.advance(seconds: -1)
       get :index
       expect(session[:staff_member_id]).to be_nil
       expect(response).to redirect_to(staff_login_url)
+    end
+
+    example 'セッションタイムアウトの値が0ならば強制ログアウトしない' do
+      ApplicationSetting.first.update_attributes(session_timeout: 0)
+      session[:last_access_time] = 365.days.ago
+      get :index
+      expect(session[:staff_member_id]).to eq(staff_member.id)
+      expect(response).to render_template('staff/top/dashboard')
     end
   end
 end
