@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       root 'top#index'
       get 'login' => 'sessions#new', as: :login
       resource :session, only: [ :create, :destroy ]
+      resource :application_settings, only: [ :show, :update ]
       resources :staff_members do
         resources :staff_events, only: [ :index ]
       end

@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def application_setting
+    ApplicationSetting.first!
+  end
+  helper_method :application_setting
+
   def rescue403(e)
     @exception = e
     render 'errors/forbidden', status: 403
