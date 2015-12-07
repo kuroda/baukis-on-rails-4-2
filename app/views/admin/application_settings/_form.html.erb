@@ -1,0 +1,7 @@
+<%= markup do |m|
+  p = FormPresenter.new(f, self)
+  m << p.text_field_block(:application_name, 'アプリケーション名', size: 16,
+    required: true)
+  m << p.number_field_block(:session_timeout, 'セッションタイムアウト（分）',
+    required: true)
+end %>
