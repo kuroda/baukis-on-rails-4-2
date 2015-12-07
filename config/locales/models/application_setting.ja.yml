@@ -1,0 +1,6 @@
+ja:
+  activerecord:
+    attributes:
+      application_setting:
+        application_name: アプリケーション名
+        session_timeout: セッションタイムアウト

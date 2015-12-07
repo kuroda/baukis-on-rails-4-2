@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140101000020) do
+ActiveRecord::Schema.define(version: 20151117163738) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -58,6 +58,13 @@ ActiveRecord::Schema.define(version: 20140101000020) do
   end
 
   add_index "allowed_sources", ["namespace", "octet1", "octet2", "octet3", "octet4"], name: "index_allowed_sources_on_namespace_and_octets", unique: true, using: :btree
+
+  create_table "application_settings", force: :cascade do |t|
+    t.string   "application_name", limit: 255, null: false
+    t.integer  "session_timeout",  limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string   "email",            limit: 255, null: false
