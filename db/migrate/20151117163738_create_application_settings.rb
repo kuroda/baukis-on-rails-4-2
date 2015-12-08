@@ -6,5 +6,10 @@ class CreateApplicationSettings < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+    ApplicationSetting.create!(
+      application_name: 'Baukis',
+      session_timeout: 60
+    )
   end
 end
