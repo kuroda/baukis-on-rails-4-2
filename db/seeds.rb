@@ -1,4 +1,4 @@
-common_table_names = %w(hash_locks)
+common_table_names = %w(application_settings hash_locks)
 common_table_names.each do |table_name|
   path = Rails.root.join('db', 'seeds', "#{table_name}.rb")
   if File.exist?(path)
