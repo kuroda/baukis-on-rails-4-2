@@ -7,9 +7,15 @@ class CreateApplicationSettings < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    ApplicationSetting.create!(
-      application_name: 'Baukis',
-      session_timeout: 60
-    )
+    reversible do |dir|
+      dir.up do
+        timestamp = Time.current.to_s(:db)
+        execute(%Q{
+          INSERT INTO application_settings
+            (application_name, session_timeout, created_at, updated_at)
+            VALUES ('Baukis', 60, '#{timestamp}', '#{timestamp}')
+        })
+      end
+    end
   end
 end
