@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+#ruby '2.1.2'
+ruby '2.1.5'
 
 gem 'rails', '4.1.0'
 gem 'mysql2'
@@ -27,4 +28,17 @@ group :test do
   gem 'spring-commands-rspec', '~> 1.0.1'
   gem 'capybara', '~> 2.2.1'
   gem 'factory_girl_rails', '~> 4.4.1'
+end
+
+# http://qiita.com/SanoHiroshi/items/d7942d66678f0d60f0ed
+group :production, :staging do 
+  gem 'unicorn'
+end
+group :development do 
+  gem 'capistrano', '~> 3.2.1'
+  gem 'capistrano-rails',   '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  gem 'capistrano-rbenv', '~> 2.0', require: false
+  #gem 'capistrano-rbenv', require: false
+  gem 'capistrano3-unicorn'
 end

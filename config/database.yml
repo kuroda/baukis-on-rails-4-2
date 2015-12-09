@@ -12,11 +12,13 @@
 default: &default
   adapter: mysql2
   encoding: utf8
-  collation: utf8_general_ci
+  #collation: utf8_general_ci
   pool: 5
   username: root
-  #password: 
-  socket: /var/lib/mysql/mysql.sock
+  password: 
+  #socket: /var/lib/mysql/mysql.sock
+  host: 127.0.0.1
+  port: 3306
 
 development:
   <<: *default
@@ -49,7 +51,16 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: baukis_production
+  #<<: *default
+  adapter: mysql2
+  encoding: utf8
+  #collation: utf8_general_ci
+  pool: 5
   username: root
-  password: 'password'
+  password: 
+  #socket: /var/lib/mysql/mysql.sock
+  host: 52.192.255.171
+  port: 3306
+  database: baukis_production
+
+
