@@ -41,4 +41,5 @@ end
   gem 'capistrano-rbenv', '~> 2.0', require: false
   #gem 'capistrano-rbenv', require: false
   gem 'capistrano3-unicorn'
+  gem 'capistrano-rails-console' # 手元の環境からデプロイ先のconsoleを使う
 #end
