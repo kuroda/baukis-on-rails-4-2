@@ -74,7 +74,7 @@ class Customer::AccountForm
   def customer_params
     @params.require(:customer).permit(
       :family_name, :given_name, :family_name_kana, :given_name_kana,
-      :birthday, :gender
+      :birthday, :gender, :job_title
     )
   end
 

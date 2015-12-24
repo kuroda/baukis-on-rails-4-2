@@ -10,6 +10,8 @@
     end
     m << p.birthday_field_block(:birthday, '生年月日')
     m << p.gender_field_block
+    m << p.drop_down_list_block(:job_title, '職業',
+      Customer::JOB_TITLES)
     m.div(class: 'input-block') do
       m << p.decorated_label(:personal_phones, '電話番号')
       m.ol do
