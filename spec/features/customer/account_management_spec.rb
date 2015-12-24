@@ -18,6 +18,7 @@ feature '顧客によるアカウント管理' do
     end
     click_button '確認画面へ進む'
     click_button '訂正'
+    select "会社役員", :from => "form[customer][job_title]"
     within('fieldset#work-address-fields') do
       fill_in '会社名', with: 'テスト'
     end
@@ -27,6 +28,7 @@ feature '顧客によるアカウント管理' do
     customer.reload
     expect(customer.birthday).to eq(Date.new(1980, 4, 1))
     expect(customer.home_address.postal_code).to eq('9999999')
+    expect(customer.job_title).to eq('会社役員')
     expect(customer.work_address.company_name).to eq('テスト')
   end
 
