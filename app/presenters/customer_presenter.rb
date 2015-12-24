@@ -1,5 +1,5 @@
 class CustomerPresenter < ModelPresenter
-  delegate :email, to: :object
+  delegate :email, :job_title, to: :object
 
   def full_name
     object.family_name + ' ' + object.given_name
