@@ -6,7 +6,7 @@ class Staff::CustomerForm
 
   def initialize(customer = nil)
     @customer = customer
-    @customer ||= Customer.new(gender: 'male')
+    @customer ||= Customer.new(gender: 'male', job_title: '')
     (2 - @customer.personal_phones.size).times do
       @customer.personal_phones.build
     end
@@ -76,7 +76,7 @@ class Staff::CustomerForm
     @params.require(:customer).permit(
       :email, :password,
       :family_name, :given_name, :family_name_kana, :given_name_kana,
-      :birthday, :gender
+      :birthday, :gender, :job_title
     )
   end
 
