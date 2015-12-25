@@ -13,6 +13,8 @@
       m << p.drop_down_list_block(:gender, '性別:',
         [ [ '男性', 'male' ], [ '女性', 'female' ] ])
     end
+    m << p.drop_down_list_block(:job_title, '職業',
+      Customer::JOB_TITLES)
     m.br
     m.div do
       m << p.drop_down_list_block(:address_type, '住所の検索範囲:',
