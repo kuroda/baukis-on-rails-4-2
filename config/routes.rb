@@ -27,6 +27,7 @@ Rails.application.routes.draw do
           get :inbound, :outbound, :deleted, on: :collection
         end
       end
+      resources :interests
     end
   end
 
