@@ -1,4 +1,4 @@
-class InterestsController < ApplicationController
+class Staff::InterestsController < Staff::Base
   before_action :set_interest, only: [:show, :edit, :update, :destroy]
 
   # GET /interests
