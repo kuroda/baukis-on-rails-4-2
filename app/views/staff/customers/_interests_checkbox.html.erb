@@ -1,0 +1,9 @@
+<%= f.fields_for :interests, interest, index: index do |ff| %>
+  <%= markup(:li) do |m|
+    m << ff.check_box(:title, { id: "form_customer_interests_#{ index }_#{ interest.title }" })
+    m << ff.label(interest.title)
+
+    # m << check_box_tag('interests[]', interest.id, false, { id: "interests_#{ interest.id }" })
+    # m << label_tag("interests[#{ interest.id }]", interest.title)
+  end %>
+<% end %>

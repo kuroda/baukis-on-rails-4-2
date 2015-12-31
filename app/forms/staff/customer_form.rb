@@ -76,7 +76,7 @@ class Staff::CustomerForm
     @params.require(:customer).permit(
       :email, :password,
       :family_name, :given_name, :family_name_kana, :given_name_kana,
-      :birthday, :gender, :job_title
+      :birthday, :gender, :job_title, :interests
     )
   end
 
