@@ -1,0 +1,3 @@
+class InterestFormPresenter < FormPresenter
+
+end

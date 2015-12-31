@@ -1,21 +1,6 @@
-<%= form_for(@interest) do |f| %>
-  <% if @interest.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@interest.errors.count, "error") %> prohibited this interest from being saved:</h2>
-
-      <ul>
-      <% @interest.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= f.fields_for :interest, f.object.interest do |ff| %>
+  <%= markup do |m|
+    p = InterestFormPresenter.new(ff, self)
+    m << p.text_field_block(:title, 'Title', size: 8)
+  end %>
 <% end %>

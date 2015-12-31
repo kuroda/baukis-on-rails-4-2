@@ -1,27 +1,35 @@
-<p id="notice"><%= notice %></p>
+<% @title = 'List of interest' %>
+<h1><%= @title %></h1>
 
-<h1>Listing Interests</h1>
+<div class="table-wrapper">
+  <div class="links">
+    <%= link_to 'Add new', :new_staff_interest %>
+  </div>
 
-<table>
-  <thead>
+  <%= render 'search_form' %>
+
+  <%= paginate @interests %>
+  <table class="listing">
     <tr>
       <th>Title</th>
-      <th colspan="3"></th>
+      <th>Actions</th>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @interests.each do |interest| %>
+    <% @interests.each do |i| %>
+      <% p = InterestPresenter.new(i, self) %>
       <tr>
-        <td><%= interest.title %></td>
-        <td><%= link_to 'Show', interest %></td>
-        <td><%= link_to 'Edit', edit_interest_path(interest) %></td>
-        <td><%= link_to 'Destroy', interest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= p.title %></td>
+        <td class="actions">
+          <%= link_to 'Edit', [:edit, :staff, i ] %> |
+          <%= link_to 'Delete', [ :staff, i ], method: :delete,
+                      data: { confirm: '本当に削除しますか？' } %>
+        </td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+  </table>
 
-<br>
+  <%= paginate @interests %>
 
-<%= link_to 'New Interest', new_staff_interest_path %>
+  <div class="links">
+    <%= link_to 'Add new', :new_staff_interest %>
+  </div>
+</div>
