@@ -69,6 +69,26 @@ class Staff::CustomerForm
     else
       customer.work_address.mark_for_destruction
     end
+
+    interests = params[:customer][:interests]
+    if interests.present? && interests.size > 0
+      interests.each do |i|
+        # Get the id of interests from customer form
+        interest_id = i[1].to_i
+
+        # Insert or update record id value is positive
+        if interest_id > 0
+          interest_customer_link = InterestCustomerLink.find_or_initialize_by(interest_id: interest_id, customer_id: customer.id)
+          interest_customer_link.save
+        else
+          # Remove the record if the id value is negative
+          interest_customer_link = InterestCustomerLink.find_by(interest_id: interest_id.abs, customer_id: customer.id)
+          if interest_customer_link
+            interest_customer_link.destroy
+          end
+        end
+      end
+    end
   end
 
   private

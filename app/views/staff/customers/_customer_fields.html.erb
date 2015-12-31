@@ -12,12 +12,14 @@
     m << p.drop_down_list_block(:job_title, '職業', Customer::JOB_TITLES)
 
     m.div(class: 'input-block') do
-      # m << p.decorated_label(:customer_interests, 'Interests')
+      m << p.decorated_label(:interests, 'Interests')
       m.ol do
+        customer_interests = f.object.customer.interests.pluck(:id)
+
         Interest.all.each_with_index do |interest, index|
-          # m << check_box_tag('customer_interests[]', i.id, false, { id: "customer_interests_#{ i.id }" })
-          # m << label_tag("customer_interests[#{ i.id }]", i.title)
-          m << render('interests_checkbox', f: ff, interest: interest, index: index)
+          checked = customer_interests.include?(interest[:id])
+
+          m << render('interests_checkbox', f: ff, interest: interest, checked: checked)
         end
       end
     end
