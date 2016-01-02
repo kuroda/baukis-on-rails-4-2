@@ -70,23 +70,14 @@ class Staff::CustomerForm
       customer.work_address.mark_for_destruction
     end
 
-    interests = params[:customer][:interests]
-    if interests.present? && interests.size > 0
-      interests.each do |i|
-        # Get the id of interests from customer form
-        interest_id = i[1].to_i
+    interests = interest_params(:customer).fetch(:interests)
+    customer.interests.destroy_all
 
-        # Insert or update record id value is positive
-        if interest_id > 0
-          interest_customer_link = InterestCustomerLink.find_or_initialize_by(interest_id: interest_id, customer_id: customer.id)
-          interest_customer_link.save
-        else
-          # Remove the record if the id value is negative
-          interest_customer_link = InterestCustomerLink.find_by(interest_id: interest_id.abs, customer_id: customer.id)
-          if interest_customer_link
-            interest_customer_link.destroy
-          end
-        end
+    interests.size.times do |index|
+      attributes = interests[index.to_s]
+
+      if attributes && attributes[:interest_id].present?
+        CustomerInterest.create(customer_id: customer.id, interest_id: attributes[:interest_id])
       end
     end
   end
@@ -96,7 +87,7 @@ class Staff::CustomerForm
     @params.require(:customer).permit(
       :email, :password,
       :family_name, :given_name, :family_name_kana, :given_name_kana,
-      :birthday, :gender, :job_title, :interests
+      :birthday, :gender, :job_title
     )
   end
 
@@ -115,5 +106,9 @@ class Staff::CustomerForm
 
   def phone_params(record_name)
     @params.require(record_name).permit(phones: [ :number, :primary ])
+  end
+
+  def interest_params(record_name)
+    @params.require(record_name).permit(interests: [ :interest_id, :title ])
   end
 end

@@ -13,13 +13,13 @@
 
     m.div(class: 'input-block') do
       m << p.decorated_label(:interests, 'Interests')
-      m.ol do
-        customer_interests = f.object.customer.interests.pluck(:id)
+      m.ul do
+        checked_interests_id = f.object.customer.interests.pluck(:id)
 
         Interest.all.each_with_index do |interest, index|
-          checked = customer_interests.include?(interest[:id])
+          checked = checked_interests_id.include?(interest[:id])
 
-          m << render('interests_checkbox', f: ff, interest: interest, checked: checked)
+          m << render('interests_fields', f: ff, interest: interest, index: index, checked: checked)
         end
       end
     end

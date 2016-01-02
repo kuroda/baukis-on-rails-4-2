@@ -25,6 +25,10 @@ class CustomerPresenter < ModelPresenter
     end
   end
 
+  def interests
+    object.interests.pluck(:title).join(' - ')
+  end
+
   def personal_phones
     object.personal_phones.map(&:number)
   end
