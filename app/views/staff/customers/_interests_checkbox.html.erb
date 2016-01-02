@@ -1,6 +1,0 @@
-<%= f.fields_for :interests, interest, checked: checked do |ff| %>
-  <%= markup(:li) do |m|
-    m << ff.check_box(interest.id, { checked: checked }, interest.id, "-#{ interest.id }")
-    m << ff.label(interest.id, interest.title)
-  end %>
-<% end %>
