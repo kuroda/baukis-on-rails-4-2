@@ -1,7 +1,7 @@
 class Customer::AccountForm
   include ActiveModel::Model
 
-  attr_accessor :customer, :inputs_home_address, :inputs_work_address
+  attr_accessor :customer, :inputs_home_address, :inputs_work_address, :checked_interests
   delegate :persisted?, :valid?, :save, to: :customer
 
   def initialize(customer)
@@ -68,6 +68,19 @@ class Customer::AccountForm
     else
       customer.work_address.mark_for_destruction
     end
+
+    self.checked_interests = []
+    interests = interest_params(:customer).fetch(:interests)
+
+    interests.size.times do |index|
+      attributes = interests[index.to_s]
+
+      if attributes && attributes[:interest_id].present?
+        checked_interests.push(attributes[:interest_id].to_i)
+      else
+        customer.interests[index].mark_for_destruction if customer.interests[index]
+      end
+    end
   end
 
   private
@@ -93,5 +106,9 @@ class Customer::AccountForm
 
   def phone_params(record_name)
     @params.require(record_name).permit(phones: [ :number, :primary ])
+  end
+
+  def interest_params(record_name)
+    @params.require(record_name).permit(interests: [ :interest_id, :title ])
   end
 end

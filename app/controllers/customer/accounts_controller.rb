@@ -22,8 +22,15 @@ class Customer::AccountsController < Customer::Base
   def update
     @customer_form = Customer::AccountForm.new(current_customer)
     @customer_form.assign_attributes(params[:form])
+
     if params[:commit]
       if @customer_form.save
+
+        current_customer.interests.destroy_all
+        @customer_form.checked_interests.each do |interest_id|
+          CustomerInterest.create(customer_id: current_customer.id, interest_id: interest_id)
+        end
+
         flash.notice = 'アカウント情報を更新しました。'
         redirect_to :customer_account
       else
