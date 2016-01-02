@@ -19,8 +19,7 @@
             checked = f.object.checked_interests.include?(interest[:id])
             m << render('confirming_interests_fields', f: ff, interest: interest, index: index, checked: checked)
           else
-            checked_interests_id = f.object.customer.interests.pluck(:id)
-            checked = checked_interests_id.include?(interest[:id])
+            checked = f.object.customer.interests.pluck(:id).include?(interest[:id])
             m << render('interests_fields', f: ff, interest: interest, index: index, checked: checked)
           end
         end

@@ -3,6 +3,8 @@ class Interest < ActiveRecord::Base
   has_many :customers, through: :customer_interests, autosave: true
   alias_attribute :interest_id, :id
 
+  attr_reader :checked
+
   validates :title, presence: true, length: { maximum: 8, allow_blank: false }
 
   before_destroy :confirm_destroy_action

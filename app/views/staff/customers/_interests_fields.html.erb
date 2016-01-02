@@ -1,7 +1,8 @@
 <%= f.fields_for 'interests[]', interest, index: index, checked: checked do |ff| %>
   <%= markup(:li) do |m|
-    m << ff.check_box(:interest_id, { checked: checked }, interest.id, false)
-    m << ff.label(:interest_id, interest.title)
+    m << ff.check_box(:checked, { checked: checked }, true, false)
+    m << ff.label(:checked, interest.title)
     m << ff.hidden_field(:title)
+    m << ff.hidden_field(:interest_id)
   end %>
 <% end %>

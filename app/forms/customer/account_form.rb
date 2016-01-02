@@ -75,10 +75,13 @@ class Customer::AccountForm
     interests.size.times do |index|
       attributes = interests[index.to_s]
 
-      if attributes && attributes[:interest_id].present?
+      if attributes && attributes[:checked] == 'true'
         checked_interests.push(attributes[:interest_id].to_i)
+        customer.customer_interests.find_or_initialize_by(interest_id: attributes[:interest_id])
       else
-        customer.interests[index].mark_for_destruction if customer.interests[index]
+        customer.interests.size.times do |idx|
+          customer.interests[idx].mark_for_destruction if customer.interests[idx][:id] == attributes[:interest_id].to_i
+        end
       end
     end
   end
@@ -109,6 +112,6 @@ class Customer::AccountForm
   end
 
   def interest_params(record_name)
-    @params.require(record_name).permit(interests: [ :interest_id, :title ])
+    @params.require(record_name).permit(interests: [ :interest_id, :title, :checked ])
   end
 end
