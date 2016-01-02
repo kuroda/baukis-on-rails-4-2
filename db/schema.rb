@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140101000020) do
+ActiveRecord::Schema.define(version: 20160102091921) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(version: 20140101000020) do
 
   add_index "allowed_sources", ["namespace", "octet1", "octet2", "octet3", "octet4"], name: "index_allowed_sources_on_namespace_and_octets", unique: true, using: :btree
 
+  create_table "customer_interests", force: :cascade do |t|
+    t.integer "customer_id", limit: 4, null: false
+    t.integer "interest_id", limit: 4, null: false
+  end
+
+  add_index "customer_interests", ["customer_id", "interest_id"], name: "index_customer_interests_on_customer_id_and_interest_id", unique: true, using: :btree
+
   create_table "customers", force: :cascade do |t|
     t.string   "email",            limit: 255, null: false
     t.string   "email_for_index",  limit: 255, null: false
@@ -74,6 +81,7 @@ ActiveRecord::Schema.define(version: 20140101000020) do
     t.integer  "birth_year",       limit: 4
     t.integer  "birth_month",      limit: 4
     t.integer  "birth_mday",       limit: 4
+    t.string   "job_title",        limit: 255
   end
 
   add_index "customers", ["birth_mday", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_mday_and_furigana", using: :btree
@@ -111,6 +119,12 @@ ActiveRecord::Schema.define(version: 20140101000020) do
   end
 
   add_index "hash_locks", ["table", "column", "key"], name: "index_hash_locks_on_table_and_column_and_key", unique: true, using: :btree
+
+  create_table "interests", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "message_tag_links", force: :cascade do |t|
     t.integer "message_id", limit: 4, null: false

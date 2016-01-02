@@ -1,5 +1,7 @@
 class Interest < ActiveRecord::Base
-  has_and_belongs_to_many :customers, join_table: 'interest_customer_links'
+  has_many :customer_interests
+  has_many :customers, through: :customer_interests, autosave: true
+  alias_attribute :interest_id, :id
 
   validates :title, presence: true, length: { maximum: 8, allow_blank: false }
 
