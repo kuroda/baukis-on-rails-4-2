@@ -7,6 +7,9 @@ feature '顧客によるアカウント管理' do
   before do
     switch_namespace(:customer)
     login_as_customer(customer)
+    %w(旅行 映画 音楽 ファッション 料理 スポーツ).each do |title|
+      FactoryGirl.create(:interest, title: title)
+    end
     click_link 'アカウント'
     click_link '編集'
   end
@@ -18,6 +21,10 @@ feature '顧客によるアカウント管理' do
     end
     click_button '確認画面へ進む'
     click_button '訂正'
+    select "会社役員", :from => "form[customer][job_title]"
+    check '旅行'
+    check '映画'
+    check '音楽'
     within('fieldset#work-address-fields') do
       fill_in '会社名', with: 'テスト'
     end
@@ -27,6 +34,8 @@ feature '顧客によるアカウント管理' do
     customer.reload
     expect(customer.birthday).to eq(Date.new(1980, 4, 1))
     expect(customer.home_address.postal_code).to eq('9999999')
+    expect(customer.job_title).to eq('会社役員')
+    expect(customer.interests.size).to eq(3)
     expect(customer.work_address.company_name).to eq('テスト')
   end
 

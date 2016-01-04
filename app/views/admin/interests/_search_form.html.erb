@@ -1,0 +1,9 @@
+<%= form_for @search_form, as: 'search', url: :admin_interests,
+             html: { method: :get, class: 'search' } do |f| %>
+  <%= markup do |m|
+    p = FormPresenter.new(f, self)
+    m << p.text_field_block(:title, 'タイトル :')
+    m.br
+    m << f.submit('検索')
+  end %>
+<% end %>

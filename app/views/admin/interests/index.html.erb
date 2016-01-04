@@ -1,0 +1,35 @@
+<% @title = '関心事の選択項目' %>
+<h1><%= @title %></h1>
+
+<div class="table-wrapper">
+  <div class="links">
+    <%= link_to '新規登録', :new_admin_interest %>
+  </div>
+
+  <%= render 'search_form' %>
+
+  <%= paginate @interests %>
+  <table class="listing">
+    <tr>
+      <th>タイトル</th>
+      <th>アクション</th>
+    </tr>
+    <% @interests.each do |i| %>
+      <% p = InterestPresenter.new(i, self) %>
+      <tr>
+        <td><%= p.title %></td>
+        <td class="actions">
+          <%= link_to '編集', [:edit, :admin, i ] %> |
+          <%= link_to '削除', [ :admin, i ], method: :delete,
+                      data: { confirm: '本当に削除しますか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= paginate @interests %>
+
+  <div class="links">
+    <%= link_to '新規登録', :new_admin_interest %>
+  </div>
+</div>

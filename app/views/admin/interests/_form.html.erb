@@ -1,0 +1,6 @@
+<%= f.fields_for :interest, f.object.interest do |ff| %>
+  <%= markup do |m|
+    p = InterestFormPresenter.new(ff, self)
+    m << p.text_field_block(:title, 'タイトル', size: 8)
+  end %>
+<% end %>
