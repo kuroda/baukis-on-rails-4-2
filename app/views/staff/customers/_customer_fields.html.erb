@@ -14,12 +14,9 @@
     m.div(class: 'input-block') do
       m << p.decorated_label(:interests, '関心事')
       m.ul do
-        checked_interests_id = f.object.customer.interests.pluck(:id)
-
-        Interest.all.each_with_index do |interest, index|
-          checked = checked_interests_id.include?(interest[:id])
-
-          m << render('interests_fields', f: ff, interest: interest, index: index, checked: checked)
+        p.object.customer_interests.to_a.sort_by{ |i| i[:interest_id] }.each_with_index do |interest, index|
+          cip = CustomerInterestPresenter.new(interest, self)
+          m << render('interests_fields', f: ff, interest: interest, index: index, cip: cip)
         end
       end
     end
