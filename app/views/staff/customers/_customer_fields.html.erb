@@ -12,7 +12,7 @@
     m << p.drop_down_list_block(:job_title, '職業', Customer::JOB_TITLES)
 
     m.div(class: 'input-block') do
-      m << p.decorated_label(:interests, 'Interests')
+      m << p.decorated_label(:interests, '関心事')
       m.ul do
         checked_interests_id = f.object.customer.interests.pluck(:id)
 
