@@ -1,4 +1,4 @@
-class Staff::InterestSearchForm
+class Admin::InterestSearchForm
   include ActiveModel::Model
 
   attr_accessor :title

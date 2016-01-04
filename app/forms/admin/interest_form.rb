@@ -1,4 +1,4 @@
-class Staff::InterestForm
+class Admin::InterestForm
   include ActiveModel::Model
 
   attr_accessor :interest

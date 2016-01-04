@@ -3,11 +3,11 @@
 
 <div id="generic-form">
   <%= form_for @interest_form, as: 'form',
-               url: [ :staff, @interest_form.interest ] do |f| %>
+               url: [ :admin, @interest_form.interest ] do |f| %>
     <%= render 'form', f: f %>
     <div class="buttons">
       <%= f.submit '更新' %>
-      <%= link_to 'キャンセル', :staff_interests %>
+      <%= link_to 'キャンセル', :admin_interests %>
     </div>
   <% end %>
 </div>

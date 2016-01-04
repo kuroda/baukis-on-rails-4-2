@@ -3,7 +3,7 @@
 
 <div class="table-wrapper">
   <div class="links">
-    <%= link_to '新規登録', :new_staff_interest %>
+    <%= link_to '新規登録', :new_admin_interest %>
   </div>
 
   <%= render 'search_form' %>
@@ -19,8 +19,8 @@
       <tr>
         <td><%= p.title %></td>
         <td class="actions">
-          <%= link_to '編集', [:edit, :staff, i ] %> |
-          <%= link_to '削除', [ :staff, i ], method: :delete,
+          <%= link_to '編集', [:edit, :admin, i ] %> |
+          <%= link_to '削除', [ :admin, i ], method: :delete,
                       data: { confirm: '本当に削除しますか？' } %>
         </td>
       </tr>
@@ -30,6 +30,6 @@
   <%= paginate @interests %>
 
   <div class="links">
-    <%= link_to '新規登録', :new_staff_interest %>
+    <%= link_to '新規登録', :new_admin_interest %>
   </div>
 </div>

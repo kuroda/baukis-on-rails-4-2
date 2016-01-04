@@ -27,7 +27,6 @@ Rails.application.routes.draw do
           get :inbound, :outbound, :deleted, on: :collection
         end
       end
-      resources :interests
     end
   end
 
@@ -43,6 +42,7 @@ Rails.application.routes.draw do
       resources :allowed_sources, only: [ :index, :create ] do
         delete :delete, on: :collection
       end
+      resources :interests
     end
   end
 

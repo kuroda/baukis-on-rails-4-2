@@ -1,24 +1,24 @@
-class Staff::InterestsController < Staff::Base
+class Admin::InterestsController < Admin::Base
 
   # GET /interests
   def index
-    @search_form = Staff::InterestSearchForm.new(params[:search])
+    @search_form = Admin::InterestSearchForm.new(params[:search])
     @interests = @search_form.search.page(params[:page])
   end
 
   # GET /interests/new
   def new
-    @interest_form = Staff::InterestForm.new
+    @interest_form = Admin::InterestForm.new
   end
 
   # GET /interests/1/edit
   def edit
-    @interest_form = Staff::InterestForm.new(Interest.find(params[:id]))
+    @interest_form = Admin::InterestForm.new(Interest.find(params[:id]))
   end
 
   # POST /interests
   def create
-    @interest_form = Staff::InterestForm.new
+    @interest_form = Admin::InterestForm.new
     @interest_form.assign_attributes(params[:form])
     if @interest_form.save
       flash.notice = '顧客を追加しました。'
@@ -31,7 +31,7 @@ class Staff::InterestsController < Staff::Base
 
   # PATCH/PUT /interests/1
   def update
-    @interest_form = Staff::InterestForm.new(Interest.find(params[:id]))
+    @interest_form = Admin::InterestForm.new(Interest.find(params[:id]))
     @interest_form.assign_attributes(params[:form])
     if @interest_form.save
       flash.notice = 'プログラムを更新しました。'
@@ -51,6 +51,6 @@ class Staff::InterestsController < Staff::Base
       flash.alert = '入力に誤りがあります。'
     end
 
-    redirect_to :staff_interests
+    redirect_to :admin_interests
   end
 end
