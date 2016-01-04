@@ -8,6 +8,10 @@ feature '職員による顧客管理' do
   before do
     switch_namespace(:staff)
     login_as_staff_member(staff_member)
+
+    %w(旅行 映画 音楽 ファッション 料理 スポー).each do |title|
+      FactoryGirl.create(:interest, title: title)
+    end
   end
 
   scenario '職員が顧客（基本情報のみ）を追加する' do
@@ -22,6 +26,9 @@ feature '職員による顧客管理' do
     fill_in '生年月日', with: '1970-01-01'
     choose '女性'
     select "会社役員", :from => "form[customer][job_title]"
+    check '旅行'
+    check '映画'
+    check '音楽'
     click_button '登録'
 
     new_customer = Customer.order(:id).last
@@ -29,6 +36,7 @@ feature '職員による顧客管理' do
     expect(new_customer.birthday).to eq(Date.new(1970, 1, 1))
     expect(new_customer.gender).to eq('female')
     expect(new_customer.job_title).to eq('会社役員')
+    expect(new_customer.interests.size).to eq(3)
     expect(new_customer.home_address).to be_nil
     expect(new_customer.work_address).to be_nil
   end
@@ -46,6 +54,9 @@ feature '職員による顧客管理' do
     fill_in '生年月日', with: '1970-01-01'
     choose '女性'
     select "会社役員", :from => "form[customer][job_title]"
+    check '旅行'
+    check '映画'
+    check '音楽'
     check '自宅住所を入力する'
     within('fieldset#home-address-fields') do
       fill_in '郵便番号', with: '1000001'
@@ -71,6 +82,7 @@ feature '職員による顧客管理' do
     expect(new_customer.birthday).to eq(Date.new(1970, 1, 1))
     expect(new_customer.gender).to eq('female')
     expect(new_customer.job_title).to eq('会社役員')
+    expect(new_customer.interests.size).to eq(3)
     expect(new_customer.home_address.postal_code).to eq('1000001')
     expect(new_customer.work_address.company_name).to eq('テスト')
   end
@@ -81,6 +93,9 @@ feature '職員による顧客管理' do
 
     fill_in 'メールアドレス', with: 'test@example.jp'
     select "会社役員", :from => "form[customer][job_title]"
+    check '旅行'
+    check '映画'
+    check '音楽'
     within('fieldset#home-address-fields') do
       fill_in '郵便番号', with: '9999999'
     end
@@ -92,6 +107,7 @@ feature '職員による顧客管理' do
     customer.reload
     expect(customer.email).to eq('test@example.jp')
     expect(customer.job_title).to eq('会社役員')
+    expect(customer.interests.size).to eq(3)
     expect(customer.home_address.postal_code).to eq('9999999')
     expect(customer.work_address.company_name).to eq('テスト')
   end
