@@ -14,13 +14,12 @@
     m.div(class: 'input-block') do
       m << p.decorated_label(:interests, '関心事')
       m.ul do
-        Interest.all.each_with_index do |interest, index|
+        p.object.customer_interests.to_a.sort_by{ |i| i[:interest_id] }.each_with_index do |interest, index|
+          cip = CustomerInterestPresenter.new(interest, self)
           if confirming
-            checked = f.object.checked_interests.include?(interest[:id])
-            m << render('confirming_interests_fields', f: ff, interest: interest, index: index, checked: checked)
+            m << render('confirming_interests_fields', f: ff, interest: interest, index: index, cip: cip)
           else
-            checked = f.object.customer.interests.pluck(:id).include?(interest[:id])
-            m << render('interests_fields', f: ff, interest: interest, index: index, checked: checked)
+            m << render('interests_fields', f: ff, interest: interest, index: index, cip: cip)
           end
         end
       end

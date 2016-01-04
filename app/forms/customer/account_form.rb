@@ -1,7 +1,7 @@
 class Customer::AccountForm
   include ActiveModel::Model
 
-  attr_accessor :customer, :inputs_home_address, :inputs_work_address, :checked_interests
+  attr_accessor :customer, :inputs_home_address, :inputs_work_address
   delegate :persisted?, :valid?, :save, to: :customer
 
   def initialize(customer)
@@ -18,6 +18,16 @@ class Customer::AccountForm
     end
     (2 - @customer.work_address.phones.size).times do
       @customer.work_address.phones.build
+    end
+
+    unchecked_interests = Interest.where('id NOT IN (?)', @customer.interests.pluck(:id))
+    (Interest.all.size - @customer.interests.size).times do |index|
+      if unchecked_interests.size == 0
+        unchecked_interests = Interest.all
+        @customer.customer_interests.build(interest_id: unchecked_interests[index].id)
+      else
+        @customer.customer_interests.build(interest_id: unchecked_interests[index].id)
+      end
     end
   end
 
@@ -69,19 +79,13 @@ class Customer::AccountForm
       customer.work_address.mark_for_destruction
     end
 
-    self.checked_interests = []
-    interests = interest_params(:customer).fetch(:interests)
-
-    interests.size.times do |index|
-      attributes = interests[index.to_s]
-
-      if attributes && attributes[:checked] == 'true'
-        checked_interests.push(attributes[:interest_id].to_i)
-        customer.customer_interests.find_or_initialize_by(interest_id: attributes[:interest_id])
+    customer_interests = customer_interests_params(:customer).fetch(:customer_interests)
+    customer.customer_interests.size.times do |index|
+      attributes = customer_interests[index.to_s]
+      if attributes && attributes[:checked] == '1'
+        customer.customer_interests[index].assign_attributes(attributes.except(:checked))
       else
-        customer.interests.size.times do |idx|
-          customer.interests[idx].mark_for_destruction if customer.interests[idx][:id] == attributes[:interest_id].to_i
-        end
+        customer.customer_interests[index].mark_for_destruction
       end
     end
   end
@@ -111,7 +115,7 @@ class Customer::AccountForm
     @params.require(record_name).permit(phones: [ :number, :primary ])
   end
 
-  def interest_params(record_name)
-    @params.require(record_name).permit(interests: [ :interest_id, :title, :checked ])
+  def customer_interests_params(record_name)
+    @params.require(record_name).permit(customer_interests: [ :checked ])
   end
 end

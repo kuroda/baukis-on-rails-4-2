@@ -1,12 +1,10 @@
-<%= f.fields_for 'interests[]', interest, index: index, checked: checked do |ff| %>
-  <% if checked %>
+<%= f.fields_for 'customer_interests[]', interest, index: index, cip: cip do |ff| %>
+  <% if !interest.marked_for_destruction? %>
     <%= markup(:li) do |m|
-      # m << ff.check_box(:interest_id, { checked: checked }, interest.id, false)
-      m << ff.label(:interest_id, interest.title)
-      m << ff.hidden_field(:interest_id)
-      m << ff.hidden_field(:checked, { value: checked })
+      m << ff.label(:title, cip.title)
+      m << ff.hidden_field(:checked, { value: '1' })
     end %>
   <% else
-     ff.hidden_field(:interest_id)
-  end %>
-<% end %>
+    ff.hidden_field(:checked, { value: '0' })
+  end
+end %>

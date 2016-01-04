@@ -16,8 +16,8 @@ class Customer < ActiveRecord::Base
     foreign_key: 'customer_id'
   has_many :inbound_messages, class_name: 'StaffMessage',
     foreign_key: 'customer_id'
-  has_many :customer_interests
-  has_many :interests, through: :customer_interests, autosave: true
+  has_many :customer_interests, autosave: true
+  has_many :interests, through: :customer_interests
 
   JOB_TITLES = %w(
     会社員

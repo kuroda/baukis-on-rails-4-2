@@ -1,6 +1,6 @@
 class Interest < ActiveRecord::Base
-  has_many :customer_interests
-  has_many :customers, through: :customer_interests, autosave: true
+  has_many :customer_interests, autosave: true
+  has_many :customers, through: :customer_interests
   alias_attribute :interest_id, :id
 
   attr_reader :checked
