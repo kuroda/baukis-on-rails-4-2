@@ -10,6 +10,6 @@ class Admin::InterestSearchForm
     end
 
     rel = rel.distinct
-    rel.order(:title)
+    rel.order(:id)
   end
 end
