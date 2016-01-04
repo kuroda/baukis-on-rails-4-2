@@ -7,7 +7,7 @@ feature '顧客によるアカウント管理' do
   before do
     switch_namespace(:customer)
     login_as_customer(customer)
-    %w(旅行 映画 音楽 ファッション 料理 スポー).each do |title|
+    %w(旅行 映画 音楽 ファッション 料理 スポーツ).each do |title|
       FactoryGirl.create(:interest, title: title)
     end
     click_link 'アカウント'

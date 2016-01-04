@@ -9,7 +9,7 @@ feature '職員による顧客管理' do
     switch_namespace(:staff)
     login_as_staff_member(staff_member)
 
-    %w(旅行 映画 音楽 ファッション 料理 スポー).each do |title|
+    %w(旅行 映画 音楽 ファッション 料理 スポーツ).each do |title|
       FactoryGirl.create(:interest, title: title)
     end
   end

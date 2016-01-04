@@ -4,7 +4,7 @@ interest_titles = %w{
   音楽
   ファッション
   料理
-  スポー
+  スポーツ
 }
 
 interest_titles.each do |t|
