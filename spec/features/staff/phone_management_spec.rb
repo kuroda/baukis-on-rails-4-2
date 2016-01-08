@@ -8,6 +8,9 @@ feature '職員による顧客電話番号管理' do
   before do
     switch_namespace(:staff)
     login_as_staff_member(staff_member)
+    %w(旅行 映画 音楽 ファッション 料理 スポーツ).each do |title|
+      FactoryGirl.create(:interest, title: title)
+    end
   end
 
   scenario '職員が顧客の電話番号を追加する' do
