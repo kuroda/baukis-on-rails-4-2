@@ -6,9 +6,6 @@
     <%= link_to '新規登録', :new_admin_interest %>
   </div>
 
-  <%= render 'search_form' %>
-
-  <%= paginate @interests %>
   <table class="listing">
     <tr>
       <th>タイトル</th>
@@ -26,8 +23,6 @@
       </tr>
     <% end %>
   </table>
-
-  <%= paginate @interests %>
 
   <div class="links">
     <%= link_to '新規登録', :new_admin_interest %>

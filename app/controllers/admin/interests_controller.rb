@@ -2,8 +2,7 @@ class Admin::InterestsController < Admin::Base
 
   # GET /interests
   def index
-    @search_form = Admin::InterestSearchForm.new(params[:search])
-    @interests = @search_form.search.page(params[:page])
+    @interests = Interest.all
   end
 
   # GET /interests/new
