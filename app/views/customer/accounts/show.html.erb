@@ -13,6 +13,8 @@
     <tr><th>フリガナ</th><td><%= p1.full_name_kana %></td></tr>
     <tr><th>生年月日</th><td class="date"><%= p1.birthday %></td></tr>
     <tr><th>性別</th><td><%= p1.gender %></td></tr>
+    <tr><th>職業</th><td><%= p1.job_title %></td></tr>
+    <tr><th>関心事</th><td><%= p1.interests %></td></tr>
     <tr><th>個人電話番号(1)</th><td><%= p1.personal_phones[0] %></td></tr>
     <tr><th>個人電話番号(2)</th><td><%= p1.personal_phones[1] %></td></tr>
     <% if @customer.home_address %>

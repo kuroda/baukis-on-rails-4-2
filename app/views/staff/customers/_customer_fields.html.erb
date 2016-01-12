@@ -9,6 +9,18 @@
     end
     m << p.birthday_field_block(:birthday, '生年月日')
     m << p.gender_field_block
+    m << p.drop_down_list_block(:job_title, '職業', Customer::JOB_TITLES)
+
+    m.div(class: 'input-block') do
+      m << p.decorated_label(:interests, '関心事')
+      m.ul do
+        p.object.customer_interests.to_a.sort_by{ |i| i[:interest_id] }.each_with_index do |interest, index|
+          cip = CustomerInterestPresenter.new(interest, self)
+          m << render('interests_fields', f: ff, interest: interest, index: index, cip: cip)
+        end
+      end
+    end
+
     m.div(class: 'input-block') do
       m << p.decorated_label(:personal_phones, '電話番号')
       m.ol do

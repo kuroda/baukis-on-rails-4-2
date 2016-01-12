@@ -1,5 +1,5 @@
 class CustomerPresenter < ModelPresenter
-  delegate :email, to: :object
+  delegate :email, :job_title, to: :object
 
   def full_name
     object.family_name + ' ' + object.given_name
@@ -23,6 +23,10 @@ class CustomerPresenter < ModelPresenter
     else
       ''
     end
+  end
+
+  def interests
+    object.interests.pluck(:title).join(' - ')
   end
 
   def personal_phones

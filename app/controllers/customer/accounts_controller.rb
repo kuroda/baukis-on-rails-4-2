@@ -22,6 +22,7 @@ class Customer::AccountsController < Customer::Base
   def update
     @customer_form = Customer::AccountForm.new(current_customer)
     @customer_form.assign_attributes(params[:form])
+
     if params[:commit]
       if @customer_form.save
         flash.notice = 'アカウント情報を更新しました。'

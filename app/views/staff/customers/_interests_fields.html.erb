@@ -1,0 +1,6 @@
+<%= f.fields_for 'customer_interests[]', interest, index: index, cip: cip do |ff| %>
+  <%= markup(:li) do |m|
+    m << ff.check_box(:checked, { checked: !interest.id.nil? })
+    m << ff.label(:checked, cip.title)
+  end %>
+<% end %>

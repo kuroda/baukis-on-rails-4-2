@@ -3,7 +3,7 @@ class Staff::CustomerSearchForm
   include StringNormalizer
 
   attr_accessor :family_name_kana, :given_name_kana,
-    :birth_year, :birth_month, :birth_mday, :gender,
+    :birth_year, :birth_month, :birth_mday, :gender, :job_title,
     :address_type, :prefecture, :city, :postal_code, :phone_number,
     :last_four_digits
 
@@ -21,6 +21,7 @@ class Staff::CustomerSearchForm
     rel = rel.where(birth_month: birth_month) if birth_month.present?
     rel = rel.where(birth_mday: birth_mday) if birth_mday.present?
     rel = rel.where(gender: gender) if gender.present?
+    rel = rel.where(job_title: job_title) if job_title.present?
 
     if prefecture.present? || city.present? || postal_code.present?
       case address_type

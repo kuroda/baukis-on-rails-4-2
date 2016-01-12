@@ -16,6 +16,16 @@ class Customer < ActiveRecord::Base
     foreign_key: 'customer_id'
   has_many :inbound_messages, class_name: 'StaffMessage',
     foreign_key: 'customer_id'
+  has_many :customer_interests, autosave: true
+  has_many :interests, through: :customer_interests
+
+  JOB_TITLES = %w(
+    会社員
+    会社役員 公務員 自営業
+    自由業 専業主婦・専業主夫
+    パート・アルバイト 学生
+    その他
+  )
 
   validates :gender, inclusion: { in: %w(male female), allow_blank: true }
   validates :birthday, date: {
@@ -23,6 +33,7 @@ class Customer < ActiveRecord::Base
     before: ->(obj) { Date.today },
     allow_blank: true
   }
+  validates :job_title, inclusion: { in: JOB_TITLES, allow_blank: true }
 
   before_save do
     if birthday
