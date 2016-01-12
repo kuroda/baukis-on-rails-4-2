@@ -20,7 +20,7 @@ class Admin::InterestsController < Admin::Base
     @interest_form = Admin::InterestForm.new
     @interest_form.assign_attributes(params[:form])
     if @interest_form.save
-      flash.notice = '新しい関心事を追加しました。'
+      flash.notice = '興味・関心を新たに追加しました。'
       redirect_to action: 'index'
     else
       flash.now.alert = '入力に誤りがあります。'
@@ -33,7 +33,7 @@ class Admin::InterestsController < Admin::Base
     @interest_form = Admin::InterestForm.new(Interest.find(params[:id]))
     @interest_form.assign_attributes(params[:form])
     if @interest_form.save
-      flash.notice = '関心事を修正しました。'
+      flash.notice = '興味・関心を修正しました。'
       redirect_to action: 'index'
     else
       flash.now.alert = '入力に誤りがあります。'
@@ -45,9 +45,9 @@ class Admin::InterestsController < Admin::Base
   def destroy
     interest = Interest.find(params[:id])
     if interest.destroy
-      flash.notice = '関心事を削除しました。'
+      flash.notice = '興味・関心を削除しました。'
     else
-      flash.alert = '入力に誤りがあります。'
+      flash.alert = '興味・関心は２つ以上にしてください。'
     end
 
     redirect_to :admin_interests
