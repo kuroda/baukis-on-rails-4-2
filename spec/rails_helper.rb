@@ -17,6 +17,8 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryGirl.reload
+
+    require 'initial_data_loader.rb'
   end
 
   config.before(performance: true) do

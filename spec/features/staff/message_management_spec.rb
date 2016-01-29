@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'メッセージ管理機能' do
   include FeaturesSpecHelper
   include PerformanceSpecHelper
-  let(:staff_member) { create(:staff_member) }
+  let(:staff_member) { StaffMember.find_by(email: 'test0@example.com') }
   let!(:root_message) { create(:customer_message, subject: 'Hello') }
   let!(:reply1) { create(:staff_message, parent: root_message) }
   let!(:message1) { create(:customer_message, parent: reply1) }

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'プログラム管理機能', :performance do
   include FeaturesSpecHelper
   include PerformanceSpecHelper
-  let(:staff_member) { create(:staff_member) }
+  let(:staff_member) { StaffMember.find_by(email: 'test0@example.com') }
 
   before do
     20.times do |n|

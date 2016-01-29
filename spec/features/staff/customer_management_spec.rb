@@ -2,8 +2,8 @@ require 'rails_helper'
 
 feature '職員による顧客管理' do
   include FeaturesSpecHelper
-  let(:staff_member) { create(:staff_member) }
-  let!(:customer) { create(:customer) }
+  let(:staff_member) { StaffMember.find_by(email: 'test0@example.com') }
+  let(:customer) { Customer.find_by(email: 'test0@example.jp') }
 
   before do
     switch_namespace(:staff)
@@ -73,7 +73,8 @@ feature '職員による顧客管理' do
 
   scenario '職員が顧客、自宅住所、勤務先を更新する' do
     click_link '顧客管理'
-    first('table.listing').click_link '編集'
+    find('table.listing tr td', text: customer.email)
+      .find(:xpath, '..').click_link '編集'
 
     fill_in 'メールアドレス', with: 'test@example.jp'
     within('fieldset#home-address-fields') do
@@ -92,7 +93,8 @@ feature '職員による顧客管理' do
 
   scenario '職員が生年月日と自宅の郵便番号に無効な値を入力する' do
     click_link '顧客管理'
-    first('table.listing').click_link '編集'
+    find('table.listing tr td', text: customer.email)
+      .find(:xpath, '..').click_link '編集'
 
     fill_in '生年月日', with: '2100-01-01'
     within('fieldset#home-address-fields') do
@@ -110,7 +112,8 @@ feature '職員による顧客管理' do
   scenario '職員が勤務先データのない既存顧客に会社名の情報を追加する' do
     customer.work_address.destroy
     click_link '顧客管理'
-    first('table.listing').click_link '編集'
+    find('table.listing tr td', text: customer.email)
+      .find(:xpath, '..').click_link '編集'
 
     check '勤務先を入力する'
     within('fieldset#work-address-fields') do

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 feature '職員による顧客電話番号管理' do
   include FeaturesSpecHelper
-  let(:staff_member) { create(:staff_member) }
-  let!(:customer) { create(:customer) }
+  let(:staff_member) { StaffMember.find_by(email: 'test0@example.com') }
+  let(:customer) { Customer.find_by(email: 'test0@example.jp') }
 
   before do
     switch_namespace(:staff)
@@ -12,7 +12,8 @@ feature '職員による顧客電話番号管理' do
 
   scenario '職員が顧客の電話番号を追加する' do
     click_link '顧客管理'
-    first('table.listing').click_link '編集'
+    find('table.listing tr td', text: customer.email)
+      .find(:xpath, '..').click_link '編集'
 
     fill_in 'form_customer_phones_0_number', with: '090-9999-9999'
     check 'form_customer_phones_0_primary'
@@ -25,7 +26,8 @@ feature '職員による顧客電話番号管理' do
 
   scenario '職員が顧客の自宅電話番号を追加する' do
     click_link '顧客管理'
-    first('table.listing').click_link '編集'
+    find('table.listing tr td', text: customer.email)
+      .find(:xpath, '..').click_link '編集'
 
     fill_in 'form_home_address_phones_0_number', with: '03-9999-9999'
     check 'form_home_address_phones_0_primary'
@@ -38,7 +40,8 @@ feature '職員による顧客電話番号管理' do
 
   scenario '職員が顧客の勤務先電話番号を追加する' do
     click_link '顧客管理'
-    first('table.listing').click_link '編集'
+    find('table.listing tr td', text: customer.email)
+      .find(:xpath, '..').click_link '編集'
 
     fill_in 'form_work_address_phones_0_number', with: '03-9999-9999'
     check 'form_work_address_phones_0_primary'

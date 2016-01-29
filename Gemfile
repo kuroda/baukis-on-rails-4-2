@@ -26,4 +26,5 @@ group :test do
   gem 'spring-commands-rspec', '~> 1.0.1'
   gem 'capybara', '~> 2.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'database_cleaner', '~> 1.5.1'
 end
