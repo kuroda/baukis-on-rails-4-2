@@ -71,7 +71,7 @@ feature '職員による顧客管理' do
     expect(new_customer.work_address.company_name).to eq('テスト')
   end
 
-  scenario '職員が顧客、自宅住所、勤務先を更新する', :skip do
+  scenario '職員が顧客、自宅住所、勤務先を更新する' do
     click_link '顧客管理'
     first('table.listing').click_link '編集'
 

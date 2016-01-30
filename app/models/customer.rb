@@ -2,7 +2,7 @@ class Customer < ActiveRecord::Base
   include PersonalNameHolder
   include PasswordHolder
 
-  has_many :emails, dependent: :destroy
+  has_many :emails, dependent: :destroy, autosave: true
   has_many :addresses, dependent: :destroy
   has_one :home_address, autosave: true
   has_one :work_address, autosave: true
