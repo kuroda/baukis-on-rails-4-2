@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140101000020) do
+ActiveRecord::Schema.define(version: 20160130024705) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -89,6 +89,17 @@ ActiveRecord::Schema.define(version: 20140101000020) do
   add_index "customers", ["family_name_kana", "given_name_kana"], name: "index_customers_on_family_name_kana_and_given_name_kana", using: :btree
   add_index "customers", ["gender", "family_name_kana", "given_name_kana"], name: "index_customers_on_gender_and_furigana", using: :btree
   add_index "customers", ["given_name_kana"], name: "index_customers_on_given_name_kana", using: :btree
+
+  create_table "emails", force: :cascade do |t|
+    t.integer  "customer_id",       limit: 4,   null: false
+    t.string   "address",           limit: 255, null: false
+    t.string   "address_for_index", limit: 255, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "emails", ["address_for_index"], name: "index_emails_on_address_for_index", unique: true, using: :btree
+  add_index "emails", ["customer_id"], name: "index_emails_on_customer_id", using: :btree
 
   create_table "entries", force: :cascade do |t|
     t.integer  "program_id",  limit: 4,                 null: false
@@ -210,6 +221,7 @@ ActiveRecord::Schema.define(version: 20140101000020) do
   add_index "tags", ["value"], name: "index_tags_on_value", unique: true, using: :btree
 
   add_foreign_key "addresses", "customers"
+  add_foreign_key "emails", "customers"
   add_foreign_key "entries", "customers"
   add_foreign_key "entries", "programs"
   add_foreign_key "messages", "customers"
