@@ -33,7 +33,7 @@ class Staff::CustomerForm
     customer.assign_attributes(customer_params)
 
     emails = email_params.fetch(:emails)
-    check_emails(emails)
+    customer.email_addresses = emails.map { |k, v| v[:address] }
     customer.emails.size.times do |index|
       attributes = emails[index.to_s]
       if attributes && attributes[:address].present?
@@ -113,21 +113,5 @@ class Staff::CustomerForm
 
   def phone_params(record_name)
     @params.require(record_name).permit(phones: [ :number, :primary ])
-  end
-
-  def check_emails(emails)
-    emails.each do |index, hash|
-      if emails.any? { |i, h| i != index && h[:address] == hash[:address] }
-        customer.emails[index.to_i].duplicated = true
-      end
-    end
-
-    if persisted?
-      customer.emails.each_with_index do |e, index|
-        if emails.any? { |i, h| i.to_i != index && h[:address] == e.address }
-          e.exchanging = true
-        end
-      end
-    end
   end
 end
