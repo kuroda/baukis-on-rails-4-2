@@ -8,6 +8,11 @@ class Email < ActiveRecord::Base
     self.address_for_index = address.downcase if address
   end
 
+  attr_writer :duplicated
+  validate do
+    errors.add(:address, :duplicated) if @duplicated
+  end
+
   validates :address, presence: true, email: { allow_blank: true }
   validates :address_for_index, uniqueness: { allow_blank: true }
 
