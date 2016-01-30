@@ -3,14 +3,15 @@ class Email < ActiveRecord::Base
 
   belongs_to :customer
 
+  attr_writer :exchanging
+
   before_validation do
     self.address = normalize_as_email(address)
-    self.address_for_index = address.downcase if address
-  end
-
-  attr_writer :duplicated
-  validate do
-    errors.add(:address, :duplicated) if @duplicated
+    if @exchanging
+      self.address_for_index = "#{address.downcase}@dummy"
+    else
+      self.address_for_index = address.downcase if address
+    end
   end
 
   validates :address, presence: true, email: { allow_blank: true }
@@ -25,6 +26,13 @@ class Email < ActiveRecord::Base
     if errors.include?(:address_for_index)
       errors.add(:address, :taken)
       errors.delete(:address_for_index)
+    end
+  end
+
+  def resave!
+    if @exchanging
+      @exchanging = false
+      save!
     end
   end
 end

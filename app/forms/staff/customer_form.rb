@@ -116,9 +116,17 @@ class Staff::CustomerForm
   end
 
   def check_emails(emails)
-    emails.each do |index, address|
-      if emails.any? { |i, a| i != index && a == address }
+    emails.each do |index, hash|
+      if emails.any? { |i, h| i != index && h[:address] == hash[:address] }
         customer.emails[index.to_i].duplicated = true
+      end
+    end
+
+    if persisted?
+      customer.emails.each_with_index do |e, index|
+        if emails.any? { |i, h| i.to_i != index && h[:address] == e.address }
+          e.exchanging = true
+        end
       end
     end
   end

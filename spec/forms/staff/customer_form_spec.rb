@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 describe Staff::CustomerForm do
+  def params(options)
+    options[:emails] ||= {}
+    options[:phones] ||= {}
+    ActionController::Parameters.new(
+      customer: attributes_for(:customer, options))
+  end
+
   describe '顧客の新規登録' do
     let(:form) { Staff::CustomerForm.new }
     let(:email0) { attributes_for(:email) }
     let(:email1) { attributes_for(:email) }
-
-    def params(options)
-      options[:emails] ||= {}
-      options[:phones] ||= {}
-      ActionController::Parameters.new(
-        customer: attributes_for(:customer, options))
-    end
 
     example 'メールアドレスを 2 個' do
       form.assign_attributes(params(emails: { '0' => email0, '1' => email1 }))
@@ -32,6 +32,29 @@ describe Staff::CustomerForm do
         .to eq('メールアドレスが重複しています。')
       expect(form.customer.emails[1].errors.full_messages[0])
         .to eq('メールアドレスが重複しています。')
+    end
+  end
+
+  describe '顧客情報の更新' do
+    let(:customer) {
+      create(:customer, emails: [
+        build(:email, email0), build(:email, email1)
+      ])
+    }
+    let(:form) { Staff::CustomerForm.new(customer) }
+    let(:email0) { attributes_for(:email) }
+    let(:email1) { attributes_for(:email) }
+
+    example 'メールアドレスを交換する' do
+      form.assign_attributes(params(emails: { '0' => email1, '1' => email0 }))
+
+      expect(form.save).to be_truthy
+
+      customer.reload
+      expect(customer.emails[0].address).to eq(email1[:address])
+      expect(customer.emails[0].address_for_index).to eq(email1[:address])
+      expect(customer.emails[1].address).to eq(email0[:address])
+      expect(customer.emails[1].address_for_index).to eq(email0[:address])
     end
   end
 end

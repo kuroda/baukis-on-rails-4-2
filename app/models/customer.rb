@@ -31,4 +31,8 @@ class Customer < ActiveRecord::Base
       self.birth_mday = birthday.mday
     end
   end
+
+  after_save do
+    emails.map(&:resave!)
+  end
 end
