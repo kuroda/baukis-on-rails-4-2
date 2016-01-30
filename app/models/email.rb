@@ -6,10 +6,12 @@ class Email < ActiveRecord::Base
   attr_writer :exchanging
 
   before_validation do
-    if @exchanging
-      self.address_for_index = "#{address.downcase}@dummy"
-    else
-      self.address_for_index = address.downcase if address
+    if address
+      self.address_for_index = if @exchanging
+        address.downcase.gsub(/@/, '%')
+      else
+        address.downcase
+      end
     end
   end
 
