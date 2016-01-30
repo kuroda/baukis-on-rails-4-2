@@ -56,6 +56,10 @@ div#wrapper {
           font-size: $small;
           padding: 0 $very_wide;
         }
+        span.error-message {
+          color: $red;
+          font-size: $small;
+        }
       }
     }
   }

@@ -1,5 +1,10 @@
 <%= f.fields_for :emails, email, index: index do |ff| %>
   <%= markup(:li) do |m|
     m << ff.text_field(:address)
+    if msg = ff.object.errors.full_messages_for(:address).first
+      m.span(class: 'error-message') do
+        m.text msg
+      end
+    end
   end %>
 <% end %>
