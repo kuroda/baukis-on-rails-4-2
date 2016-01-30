@@ -33,7 +33,6 @@ class Staff::CustomerForm
     customer.assign_attributes(customer_params)
 
     emails = email_params.fetch(:emails)
-    customer.email_addresses = emails.map { |k, v| v[:address] }
     customer.emails.size.times do |index|
       attributes = emails[index.to_s]
       if attributes && attributes[:address].present?

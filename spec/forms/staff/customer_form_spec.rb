@@ -24,6 +24,15 @@ describe Staff::CustomerForm do
       expect(customer.emails.order(:id)[1].address).to eq(email1[:address])
     end
 
+    example 'メールアドレスが他の顧客と重複したらエラー' do
+      email = create(:customer).emails.first
+      form.assign_attributes(params(emails: { '0' => { address: email.address } }))
+
+      expect(form.save).to be_falsey
+      expect(form.customer.emails[0].errors.full_messages[0])
+        .to eq('メールアドレスが他の顧客と重複しています。')
+    end
+
     example 'メールアドレスが重複して指定されたらエラー' do
       form.assign_attributes(params(emails: { '0' => email0, '1' => email0 }))
 
@@ -49,14 +58,39 @@ describe Staff::CustomerForm do
   describe '顧客情報の更新' do
     let(:customer) {
       create(:customer, emails: [
-        build(:email, email0), build(:email, email1)
+        build(:email, email0)
       ])
     }
     let(:form) { Staff::CustomerForm.new(customer) }
     let(:email0) { attributes_for(:email) }
     let(:email1) { attributes_for(:email) }
 
+    example 'メールアドレスを追加する' do
+      form.assign_attributes(params(emails: { '0' => email0, '1' => email1 }))
+
+      expect(form.save).to be_truthy
+
+      customer.reload
+      expect(customer.emails[0].address).to eq(email0[:address])
+      expect(customer.emails[0].address_for_index).to eq(email0[:address])
+      expect(customer.emails[1].address).to eq(email1[:address])
+      expect(customer.emails[1].address_for_index).to eq(email1[:address])
+    end
+
+    example 'メールアドレスを追加しつつ、交換する' do
+      form.assign_attributes(params(emails: { '0' => email1, '1' => email0 }))
+
+      expect(form.save).to be_truthy
+
+      customer.reload
+      expect(customer.emails[0].address).to eq(email1[:address])
+      expect(customer.emails[0].address_for_index).to eq(email1[:address])
+      expect(customer.emails[1].address).to eq(email0[:address])
+      expect(customer.emails[1].address_for_index).to eq(email0[:address])
+    end
+
     example 'メールアドレスを交換する' do
+      customer.emails.create!(email1)
       form.assign_attributes(params(emails: { '0' => email1, '1' => email0 }))
 
       expect(form.save).to be_truthy

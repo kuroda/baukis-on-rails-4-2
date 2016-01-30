@@ -17,26 +17,15 @@ class Customer < ActiveRecord::Base
   has_many :inbound_messages, class_name: 'StaffMessage',
     foreign_key: 'customer_id'
 
-  attr_writer :email_addresses
-
   before_validation do
-    if @email_addresses
-      @email_addresses.each_with_index do |a, i|
-        @email_addresses.each_with_index do |b, j|
-          if i != j && a.present? && a.downcase == b.downcase
-            emails[i].duplicated = true
-          end
+    emails.each_with_index do |e0, i|
+      emails.each_with_index do |e1, j|
+        next if i == j || e0.address.blank?
+        if e0.address.downcase == e1.address.try(:downcase)
+          emails[i].duplicated = true
         end
-      end
-
-      if persisted?
-        emails.each_with_index do |e, i|
-          next unless e.persisted?
-          @email_addresses.each_with_index do |a, j|
-            if i != j && e.address_was.downcase == a.downcase
-              emails[i].exchanging = true
-            end
-          end
+        if e0.address.downcase == e1.address_was.try(:downcase)
+          emails[i].exchanging = true
         end
       end
     end
