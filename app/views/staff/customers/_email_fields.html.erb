@@ -1,0 +1,5 @@
+<%= f.fields_for :emails, email, index: index do |ff| %>
+  <%= markup(:li) do |m|
+    m << ff.text_field(:address)
+  end %>
+<% end %>

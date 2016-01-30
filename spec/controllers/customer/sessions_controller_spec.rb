@@ -6,7 +6,7 @@ describe Customer::SessionsController do
 
     example '「次回から自動でログインする」にチェックせずにログイン' do
       post :create, customer_login_form: {
-        email: customer.email,
+        email: customer.emails.first.address,
         password: 'password'
       }
 
@@ -16,7 +16,7 @@ describe Customer::SessionsController do
 
     example '「次回から自動でログインする」にチェックしてログイン' do
       post :create, customer_login_form: {
-        email: customer.email,
+        email: customer.emails.first.address,
         password: 'password',
         remember_me: '1'
       }

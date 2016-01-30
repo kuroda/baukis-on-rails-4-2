@@ -34,7 +34,6 @@ company_names = %w(OIAX ABC XYZ)
     gn = given_names[m].split(':')
 
     c = Customer.create!(
-      email: "#{fn[2]}.#{gn[2]}@example.jp",
       family_name: fn[0],
       given_name: gn[0],
       family_name_kana: fn[1],
@@ -43,6 +42,7 @@ company_names = %w(OIAX ABC XYZ)
       birthday: 60.years.ago.advance(seconds: rand(40.years)).to_date,
       gender: m < 5 ? 'male' : 'female'
     )
+    c.emails.create!(address: "#{fn[2]}.#{gn[2]}@example.jp")
     if m % 2 == 0
       c.personal_phones.create!(number: sprintf('090-0000-%04d', n * 10 + m))
     end

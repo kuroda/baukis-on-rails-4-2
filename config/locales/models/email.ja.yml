@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    attributes:
+      email:
+        address: メールアドレス
+    errors:
+      models:
+        email:
+          attributes:
+            address:
+              taken: が他の顧客と重複しています。
+              duplicated: が重複しています。

@@ -1,5 +1,15 @@
 class CustomerPresenter < ModelPresenter
-  delegate :email, to: :object
+  def emails
+    if object.emails.many?
+      markup(:ul) do |m|
+        object.emails.each do |email|
+          m.li email.address
+        end
+      end
+    else
+      object.emails.first.try(:address)
+    end
+  end
 
   def full_name
     object.family_name + ' ' + object.given_name

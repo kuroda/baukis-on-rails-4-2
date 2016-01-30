@@ -7,6 +7,9 @@ class Staff::CustomerForm
   def initialize(customer = nil)
     @customer = customer
     @customer ||= Customer.new(gender: 'male')
+    (2 - @customer.emails.size).times do
+      @customer.emails.build
+    end
     (2 - @customer.personal_phones.size).times do
       @customer.personal_phones.build
     end
@@ -28,6 +31,16 @@ class Staff::CustomerForm
     self.inputs_work_address = params[:inputs_work_address] == '1'
 
     customer.assign_attributes(customer_params)
+
+    emails = email_params.fetch(:emails)
+    customer.emails.size.times do |index|
+      attributes = emails[index.to_s]
+      if attributes && attributes[:address].present?
+        customer.emails[index].assign_attributes(attributes)
+      else
+        customer.emails[index].mark_for_destruction
+      end
+    end
 
     phones = phone_params(:customer).fetch(:phones)
     customer.personal_phones.size.times do |index|
@@ -74,10 +87,14 @@ class Staff::CustomerForm
   private
   def customer_params
     @params.require(:customer).permit(
-      :email, :password,
+      :password,
       :family_name, :given_name, :family_name_kana, :given_name_kana,
       :birthday, :gender
     )
+  end
+
+  def email_params
+    @params.require(:customer).permit(emails: [ :address ])
   end
 
   def home_address_params

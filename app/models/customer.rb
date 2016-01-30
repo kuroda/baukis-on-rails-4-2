@@ -31,16 +31,4 @@ class Customer < ActiveRecord::Base
       self.birth_mday = birthday.mday
     end
   end
-
-  def email
-    emails[0].try(:address)
-  end
-
-  def email=(email)
-    if emails.first
-      self.emails[0].address = email
-    else
-      emails.build(address: email)
-    end
-  end
 end

@@ -11,6 +11,11 @@ class Email < ActiveRecord::Base
   validates :address, presence: true, email: { allow_blank: true }
   validates :address_for_index, uniqueness: { allow_blank: true }
 
+  attr_writer :duplicated
+  validate do
+    errors.add(:address, :duplicated) if @duplicated
+  end
+
   after_validation do
     if errors.include?(:address_for_index)
       errors.add(:address, :taken)
