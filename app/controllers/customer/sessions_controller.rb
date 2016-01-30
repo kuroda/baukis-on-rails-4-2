@@ -13,7 +13,8 @@ class Customer::SessionsController < Customer::Base
   def create
     @form = Customer::LoginForm.new(params[:customer_login_form])
     if @form.email.present?
-      customer = Customer.find_by(email_for_index: @form.email.downcase)
+      customer = Customer.joins(:emails)
+        .find_by('emails.address_for_index' => @form.email.downcase)
     end
     if Customer::Authenticator.new(customer).authenticate(@form.password)
       if @form.remember_me?

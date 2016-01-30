@@ -1,5 +1,4 @@
 class Customer < ActiveRecord::Base
-  include EmailHolder
   include PersonalNameHolder
   include PasswordHolder
 
@@ -30,6 +29,18 @@ class Customer < ActiveRecord::Base
       self.birth_year = birthday.year
       self.birth_month = birthday.month
       self.birth_mday = birthday.mday
+    end
+  end
+
+  def email
+    emails[0].try(:address)
+  end
+
+  def email=(email)
+    if emails.first
+      self.emails[0].address = email
+    else
+      emails.build(address: email)
     end
   end
 end

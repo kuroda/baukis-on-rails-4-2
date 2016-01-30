@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160130024705) do
+ActiveRecord::Schema.define(version: 20160130030350) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -60,8 +60,6 @@ ActiveRecord::Schema.define(version: 20160130024705) do
   add_index "allowed_sources", ["namespace", "octet1", "octet2", "octet3", "octet4"], name: "index_allowed_sources_on_namespace_and_octets", unique: true, using: :btree
 
   create_table "customers", force: :cascade do |t|
-    t.string   "email",            limit: 255, null: false
-    t.string   "email_for_index",  limit: 255, null: false
     t.string   "family_name",      limit: 255, null: false
     t.string   "given_name",       limit: 255, null: false
     t.string   "family_name_kana", limit: 255, null: false
@@ -85,7 +83,6 @@ ActiveRecord::Schema.define(version: 20160130024705) do
   add_index "customers", ["birth_year", "birth_month", "birth_mday"], name: "index_customers_on_birth_year_and_birth_month_and_birth_mday", using: :btree
   add_index "customers", ["birth_year", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_year_and_furigana", using: :btree
   add_index "customers", ["birth_year", "given_name_kana"], name: "index_customers_on_birth_year_and_given_name_kana", using: :btree
-  add_index "customers", ["email_for_index"], name: "index_customers_on_email_for_index", unique: true, using: :btree
   add_index "customers", ["family_name_kana", "given_name_kana"], name: "index_customers_on_family_name_kana_and_given_name_kana", using: :btree
   add_index "customers", ["gender", "family_name_kana", "given_name_kana"], name: "index_customers_on_gender_and_furigana", using: :btree
   add_index "customers", ["given_name_kana"], name: "index_customers_on_given_name_kana", using: :btree
