@@ -53,6 +53,18 @@ describe Staff::CustomerForm do
       expect(form.customer.emails[1].errors.full_messages[0])
         .to eq('メールアドレスが重複しています。')
     end
+
+    example 'メールアドレスが重複して指定されたらエラー（全角・半角）' do
+      e0 = { address: 'foo@exmaple.com' }
+      e1 = { address: 'ｆｏｏ@exmaple.com' }
+      form.assign_attributes(params(emails: { '0' => e0, '1' => e1 }))
+
+      expect(form.save).to be_falsey
+      expect(form.customer.emails[0].errors.full_messages[0])
+        .to eq('メールアドレスが重複しています。')
+      expect(form.customer.emails[1].errors.full_messages[0])
+        .to eq('メールアドレスが重複しています。')
+    end
   end
 
   describe '顧客情報の更新' do
