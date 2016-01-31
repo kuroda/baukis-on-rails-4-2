@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/oiax/initial-test-data
+  revision: 5be306da48db2f6577ab45ada61ff54e1da5bf72
+  specs:
+    initial-test-data (0.1.0)
+      database_cleaner (~> 1.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -194,6 +201,7 @@ DEPENDENCIES
   date_validator (~> 0.7.0)
   email_validator (~> 1.4.0)
   factory_girl_rails (~> 4.5.0)
+  initial-test-data!
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails (~> 4.2.1)

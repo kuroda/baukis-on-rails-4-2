@@ -27,4 +27,5 @@ group :test do
   gem 'capybara', '~> 2.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'database_cleaner', '~> 1.5.1'
+  gem 'initial-test-data', git: 'git://github.com/oiax/initial-test-data'
 end

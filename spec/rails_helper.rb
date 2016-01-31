@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'initial-test-data'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -18,7 +19,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     FactoryGirl.reload
 
-    require 'initial_data_loader.rb'
+    InitialTestData.load('spec')
   end
 
   config.before(performance: true) do
