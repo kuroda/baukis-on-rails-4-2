@@ -6,24 +6,18 @@ Dir[Rails.root.join("spec/initial_data/*.rb")].each do |f|
   md5.update File.new(f).read
 end
 
-conn = ActiveRecord::Base.connection
+digest_path = Rails.root.join('tmp', 'initial_data.md5')
 
-DIGEST_TABLE_NAME = '_initial_data_digest'
+md5_digest = nil
 
-unless conn.table_exists?(DIGEST_TABLE_NAME)
-  conn.create_table(DIGEST_TABLE_NAME) do |t|
-    t.string :md5_value
+if File.exist?(digest_path)
+  File.open(digest_path) do |f|
+    md5_digest = f.read
   end
 end
 
-class InitialDataDigest < ActiveRecord::Base
-  self.table_name = DIGEST_TABLE_NAME
-end
-
-digest = InitialDataDigest.first
-
-unless digest.try(:md5_value) == md5.hexdigest
-  DatabaseCleaner.strategy = :truncation, { except: [ DIGEST_TABLE_NAME ] }
+unless md5_digest == md5.hexdigest
+  DatabaseCleaner.strategy = :truncation
   DatabaseCleaner.clean
 
   yaml_path = Rails.root.join('spec', 'initial_data', '_index.yml')
@@ -44,7 +38,7 @@ unless digest.try(:md5_value) == md5.hexdigest
     end
   end
 
-  digest ||= InitialDataDigest.new
-  digest.md5_value = md5.hexdigest
-  digest.save
+  File.open(digest_path, 'w') do |f|
+    f.write md5.hexdigest
+  end
 end
