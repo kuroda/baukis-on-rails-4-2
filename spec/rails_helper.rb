@@ -19,7 +19,11 @@ RSpec.configure do |config|
   config.before(:suite) do
     FactoryGirl.reload
 
-    InitialTestData.load('spec')
+    if HashLock.count.zero?
+      load File.expand_path("../../db/seeds.rb", __FILE__)
+    end
+
+    InitialTestData.load('spec', except: %w(hash_locks))
   end
 
   config.before(performance: true) do
