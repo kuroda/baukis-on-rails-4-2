@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Admin::TopController, 'ログイン前' do
-  let(:administrator) { create(:administrator) }
+  let(:administrator) { fetch(:administrator, :test0) }
 
   describe 'IPアドレスによるアクセス制限' do
     before do
@@ -23,7 +23,7 @@ describe Admin::TopController, 'ログイン前' do
 end
 
 describe Admin::TopController, 'ログイン後' do
-  let(:administrator) { create(:administrator) }
+  let(:administrator) { fetch(:administrator, :test0) }
 
   before do
     session[:administrator_id] = administrator.id

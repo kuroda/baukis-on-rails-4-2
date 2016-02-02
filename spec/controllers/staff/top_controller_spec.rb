@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Staff::TopController, 'ログイン前' do
-  let(:staff_member) { create(:staff_member) }
+  let(:staff_member) { fetch(:staff_member, :test0) }
 
   describe 'IPアドレスによるアクセス制限' do
     before do
@@ -23,7 +23,7 @@ describe Staff::TopController, 'ログイン前' do
 end
 
 describe Staff::TopController, 'ログイン後' do
-  let(:staff_member) { create(:staff_member) }
+  let(:staff_member) { fetch(:staff_member, :test0) }
 
   before do
     session[:staff_member_id] = staff_member.id

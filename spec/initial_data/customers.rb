@@ -1,5 +1,6 @@
 include FactoryGirl::Syntax::Methods
+include InitialTestData::Utilities
 
-create(:customer, email: 'test0@example.jp')
-create(:customer, email: 'test1@example.jp')
-create(:customer, email: 'test2@example.jp')
+0.upto(2) do |n|
+  store create(:customer, email: "test#{n}@example.jp"), "test#{n}"
+end

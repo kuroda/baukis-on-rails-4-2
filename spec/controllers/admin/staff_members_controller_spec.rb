@@ -27,7 +27,7 @@ describe Admin::StaffMembersController do
   end
 
   describe '#update' do
-    let(:staff_member) { create(:staff_member) }
+    let(:staff_member) { fetch(:staff_member, :test0) }
 
     example 'suspendedフラグをセットする' do
       params_hash.merge!(suspended: true)

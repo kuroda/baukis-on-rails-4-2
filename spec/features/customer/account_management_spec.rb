@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature '顧客によるアカウント管理' do
   include FeaturesSpecHelper
-  let(:customer) { Customer.find_by(email: 'test0@example.jp') }
+  let(:customer) { fetch(:customer, :test0) }
 
   before do
     switch_namespace(:customer)

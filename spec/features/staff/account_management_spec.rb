@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature '職員による自分自身のアカウント管理' do
   include FeaturesSpecHelper
-  let(:staff_member) { StaffMember.find_by(email: 'test0@example.com') }
+  let(:staff_member) { fetch(:staff_member, :test0) }
 
   before do
     switch_namespace(:staff)

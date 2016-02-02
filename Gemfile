@@ -21,11 +21,12 @@ gem 'date_validator', '~> 0.7.0'
 gem 'email_validator', '~> 1.4.0'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'quiet_assets', '~> 1.0.2', group: :development
+
 group :test do
   gem 'rspec-rails', '~> 3.4.0'
   gem 'spring-commands-rspec', '~> 1.0.1'
   gem 'capybara', '~> 2.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'database_cleaner', '~> 1.5.1'
-  gem 'initial-test-data', '~> 0.3.0'
+  gem 'initial-test-data', '~> 0.4.2'
 end

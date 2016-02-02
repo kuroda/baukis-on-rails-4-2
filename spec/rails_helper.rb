@@ -15,6 +15,7 @@ RSpec.configure do |config|
   config.filter_run_excluding :performance => true
 
   config.include FactoryGirl::Syntax::Methods
+  config.include InitialTestData::Utilities
 
   config.before(:suite) do
     FactoryGirl.reload
