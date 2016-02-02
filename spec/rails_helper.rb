@@ -23,7 +23,8 @@ RSpec.configure do |config|
       load File.expand_path("../../db/seeds.rb", __FILE__)
     end
 
-    InitialTestData.load('spec', except: %w(hash_locks))
+    InitialTestData.load('spec', except: %w(hash_locks),
+      monitoring: %w(app/services spec/factories))
   end
 
   config.before(performance: true) do
