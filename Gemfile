@@ -43,3 +43,7 @@ end
   gem 'capistrano3-unicorn'
   gem 'capistrano-rails-console' # 手元の環境からデプロイ先のconsoleを使う
 #end
+
+group :development do 
+  gem 'pry-byebug'
+end
