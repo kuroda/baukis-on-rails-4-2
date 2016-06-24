@@ -1,3 +1,8 @@
+# ステージ間で共通の設定
+# 設定値はsetで設定し、fetchで取り出し
+# 個々のタスクはtask タスク名; do ... endのブロックで定義
+# taskブロックの中には, run-locally do; ... end もしくは、 on 対象サーバ do; ... end を書く
+
 # config valid only for Capistrano 3.1
 #lock '3.2.1'
 
